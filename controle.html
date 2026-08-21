@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Controle</title><style>
+*{box-sizing:border-box}body{margin:0;background:#13001b;color:#fff;font-family:Arial}.top{background:#560080;padding:20px}.top h1{margin:0}.conn{opacity:.7;margin-top:5px}.main{max-width:650px;margin:auto;padding:16px}.card{background:#240033;border:1px solid #501663;border-radius:18px;padding:18px;margin-bottom:15px}.value{text-align:center;font-size:46px;font-weight:900;margin:5px 0 20px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}button,input{width:100%;padding:15px;border:0;border-radius:11px;font-size:16px}button{background:#8000b5;color:#fff;font-weight:800}input{margin:7px 0 10px}.danger{background:#9d1641}.secondary{background:#43204d}.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}label{font-size:13px;opacity:.7}
+</style></head><body><div class="top"><h1>🎛️ Controle</h1><div id="conn" class="conn">Conectando…</div></div><div class="main">
+<div class="card"><div id="value" class="value">R$ 0</div><div class="grid">
+<button onclick="add(10)">+10</button><button onclick="add(50)">+50</button><button onclick="add(100)">+100</button>
+<button onclick="add(500)">+500</button><button onclick="add(1000)">+1.000</button><button onclick="add(10000)">+10.000</button>
+</div></div>
+<div class="card"><label>Adicionar valor personalizado</label><input id="addInput" type="number" min="0" placeholder="Ex.: 2500"><button onclick="customAdd()">ADICIONAR</button></div>
+<div class="card"><label>Definir valor exato</label><input id="setInput" type="number" min="0" placeholder="Ex.: 1250430"><button onclick="manual()">DEFINIR</button></div>
+<div class="card"><label>Velocidade da animação</label><input id="speed" type="range" min="100" max="5000" value="900"><div id="sl" style="text-align:center;margin:8px">900 ms</div><button class="secondary" onclick="applySpeed()">APLICAR</button></div>
+<div class="row"><button class="secondary" onclick="location.href='tv.html'">ABRIR TV</button><button class="danger" onclick="zero()">ZERAR</button></div>
+</div>
+<script src="app.js"></script><script>
+const valueEl=document.getElementById("value"),conn=document.getElementById("conn"),speedEl=document.getElementById("speed"),sl=document.getElementById("sl");
+speedEl.oninput=()=>sl.textContent=speedEl.value+" ms";
+function add(n){window.add(n).catch(e=>alert(e.message))}
+function customAdd(){const n=Number(addInput.value);if(n>0)add(n)}
+function manual(){const n=Number(setInput.value);if(n>=0)setValue(n).catch(e=>alert(e.message))}
+function applySpeed(){setState({speed:Number(speedEl.value)}).catch(e=>alert(e.message))}
+function zero(){if(confirm("Zerar o contador?"))setValue(0)}
+if(!configured()){conn.textContent="⚠️ Configure o Supabase em Configuração";}else{poll(s=>{valueEl.textContent=money(s.value);speedEl.value=s.speed;sl.textContent=s.speed+" ms";conn.textContent="🟢 ONLINE • Sala: "+ROOM}).catch(e=>conn.textContent=e.message)}
+</script></body></html>

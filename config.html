@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="pt-BR">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Configuração</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#14001d;color:#fff;font-family:Arial;padding:20px}.box{max-width:650px;margin:auto;background:#240033;padding:22px;border-radius:18px}
+h1{margin-top:0}input{width:100%;padding:14px;margin:7px 0 15px;border-radius:10px;border:0}button{width:100%;padding:15px;border:0;border-radius:10px;background:#8000b5;color:white;font-weight:bold}
+code{background:#100016;padding:3px 6px;border-radius:5px}small{opacity:.7;line-height:1.5}
+</style></head><body><div class="box">
+<h1>⚙️ Configuração</h1>
+<p>Esta versão usa <b>Supabase Realtime</b>. Você precisa criar um projeto gratuito no Supabase e preencher os dados abaixo.</p>
+<label>Project URL</label><input id="url" placeholder="https://seu-projeto.supabase.co">
+<label>Anon public key</label><input id="key" placeholder="eyJ...">
+<label>ID da sala</label><input id="room" value="principal">
+<button onclick="save()">SALVAR CONFIGURAÇÃO</button>
+<p><small>Os dados ficam salvos somente neste navegador. Nunca coloque a chave secreta/service_role aqui; use apenas a chave pública anon.</small></p>
+</div>
+<script>
+function save(){
+ localStorage.setItem("sb_url",url.value.trim().replace(/\/$/,""));
+ localStorage.setItem("sb_key",key.value.trim());
+ localStorage.setItem("room",room.value.trim()||"principal");
+ alert("Configuração salva. Abra o Controle ou a Tela da TV.");
+}
+</script></body></html>
